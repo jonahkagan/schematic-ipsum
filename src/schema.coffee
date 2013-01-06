@@ -41,7 +41,6 @@ genString = (schema, done) ->
   if schema.format?
     genFormattedString schema, done
   else
-    console.log "to the scraper!"
     scraper.paragraphs 10, done
   #else
   #  switch schema.ipsumType
