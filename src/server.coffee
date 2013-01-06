@@ -32,7 +32,7 @@ app.post "/ipsum", (req, res) ->
     if err
       res.send 400, err
     else
-      schema.toIpsum req.body, (err, ipsum) ->
+      schema.genIpsum req.body, (err, ipsum) ->
         if err
           res.send 400, err
         else

@@ -9,33 +9,76 @@ MAX_NUMBER = 100
 MIN_NUMBER = -100
 MAX_ARRAY_LENGTH = 100
 
-# Generates a random number b/w max and min
-random = (max, min) ->
+randomNum = (min, max) ->
   Math.random() * (max + min) + min
+
+randomInt = (min, max) ->
+  Math.floor randomNum min, max
+
+# Generates a random number b/w max and min
+# TODO take into account params of schema
+genNumber = (schema, rand, done) ->
+  done null, rand MAX_NUMBER, MIN_NUMBER
+
+genFormattedString = (schema, done) ->
+  done null,
+    switch schema.format
+      when "date-time"
+        (new Date(randomInt 0, (new Date().getTime()))).toISOString()
+      #when "date"
+      #when "time"
+      #when "regex"
+      when "color"
+        # http://paulirish.com/2009/random-hex-color-code-snippets/
+        "#" + randomInt(0, 16777215).toString(16)
+      #when "style"
+      when "phone"
+        "(#{randomInt 0, 999}) #{randomInt 0, 999} #{randomInt 0, 9999}"
+      when "uri" # TODO
+        "http://news.ycombinator.com"
+      when "email"
+        "notdoneyet@ipsum.com" # TODO
+      #when "ip-address"
+      #when "ipv6"
+      #when "host-name"
+      else "String format #{schema.format} not supported"
+
+# Generates a string by scraping Wikipedia
+genString = (schema, done) ->
+  if schema.format?
+    genFormattedString schema, done
+  else
+    done null, "TODO"
+  #else
+  #  switch schema.ipsumType
+  #    when "name"
+  #    #when "
+      
+
 
 # Generate a JSON object that matches the given schema filled with ipsum
 # text.
-toIpsum = (schema, done) ->
-  ret = (res) -> done null, res
+genIpsum = (schema, done) ->
   switch schema.type
     when "boolean"
-      ret Math.random() > 0.5
+      done null, Math.random() > 0.5
     when "number"
-      ret random MAX_NUMBER, MIN_NUMBER
+      genNumber schema, randomNum, done
     when "integer"
-      ret Math.round random MAX_NUMBER, MIN_NUMBER
+      genNumber schema, randomInt, done
     when "string"
-      done null, "TODO"
+      genString schema, done
     when "object"
-      async.map _.values(schema.properties), toIpsum, (err, ipsumVals) ->
+      async.map _.values(schema.properties), genIpsum, (err, ipsumVals) ->
         done err, _.object _.keys(schema.properties), ipsumVals
     when "array"
+      # TODO take into account length constraints
       async.map(
-        _.range(0, Math.random() * MAX_ARRAY_LENGTH)
-        (i, done) -> toIpsum schema.items, done
+        _.range(0, randomInt(0, MAX_ARRAY_LENGTH))
+        (i, done) -> genIpsum schema.items, done
         done)
-    when "any"
-      ret "WTF"
+    else
+      done null, "Dunno what to do for type #{schema.type}"
 
 module.exports =
 
@@ -46,4 +89,4 @@ module.exports =
     #console.log "errors", report.errors
     if _.isEmpty report.errors then null else report.errors
 
-  toIpsum: toIpsum
+  genIpsum: genIpsum

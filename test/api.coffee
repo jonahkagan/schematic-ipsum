@@ -69,6 +69,14 @@ describe "nested:", ->
         type: "array"
         items: type: "string"
 
+describe "string format:", ->
+  testFmt = (f) -> testSchema f, { type: "string", format: f }
+  testFmt "date-time"
+  testFmt "color"
+  testFmt "phone"
+  testFmt "uri"
+  testFmt "email"
+
 describe "errors:", ->
 
   it "should error if not given a schema", (done) ->
