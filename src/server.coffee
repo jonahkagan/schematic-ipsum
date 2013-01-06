@@ -1,8 +1,6 @@
 express = require "express"
 http = require "http"
-_ = require "underscore"
-
-require "./underscoreExt"
+_ = require "./underscoreExt"
 
 schema = require "./schema"
 

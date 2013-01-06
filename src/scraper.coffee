@@ -1,4 +1,4 @@
-_ = require "underscore"
+_ = require "./underscoreExt"
 nodeio = require "node.io"
 wikipedia = require "./wikipedia"
 

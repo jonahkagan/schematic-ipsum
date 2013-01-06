@@ -1,4 +1,4 @@
-_ = require "underscore"
+_ = require "./underscoreExt"
 async = require "async"
 jsv = require("JSV").JSV
 
@@ -7,12 +7,6 @@ scraper = require "./scraper"
 MAX_NUMBER = 100
 MIN_NUMBER = -100
 MAX_ARRAY_LENGTH = 5
-
-randomNum = (min, max) ->
-  Math.random() * (max + min) + min
-
-randomInt = (min, max) ->
-  Math.floor randomNum min, max
 
 # Generates a random number b/w max and min
 # TODO take into account params of schema
@@ -23,16 +17,16 @@ genFormattedString = (schema, done) ->
   done null,
     switch schema.format
       when "date-time"
-        (new Date(randomInt 0, (new Date().getTime()))).toISOString()
+        (new Date(_.randomInt 0, Date.now())).toISOString()
       #when "date"
       #when "time"
       #when "regex"
       when "color"
         # http://paulirish.com/2009/random-hex-color-code-snippets/
-        "#" + randomInt(0, 16777215).toString(16)
+        "#" + _.randomInt(0, 16777215).toString(16)
       #when "style"
       when "phone"
-        "(#{randomInt 0, 999}) #{randomInt 0, 999} #{randomInt 0, 9999}"
+        "(#{_.randomInt 0, 999}) #{_.randomInt 0, 999} #{_.randomInt 0, 9999}"
       when "uri" # TODO
         "http://news.ycombinator.com"
       when "email"
@@ -47,6 +41,7 @@ genString = (schema, done) ->
   if schema.format?
     genFormattedString schema, done
   else
+    console.log "to the scraper!"
     scraper.paragraphs 10, done
   #else
   #  switch schema.ipsumType
@@ -62,9 +57,9 @@ genIpsum = (schema, done) ->
     when "boolean"
       done null, Math.random() > 0.5
     when "number"
-      genNumber schema, randomNum, done
+      genNumber schema, _.randomNum, done
     when "integer"
-      genNumber schema, randomInt, done
+      genNumber schema, _.randomInt, done
     when "string"
       genString schema, done
     when "object"
@@ -73,7 +68,7 @@ genIpsum = (schema, done) ->
     when "array"
       # TODO take into account length constraints
       async.map(
-        _.range(0, randomInt(0, MAX_ARRAY_LENGTH))
+        _.range(0, _.randomInt(0, MAX_ARRAY_LENGTH))
         (i, done) -> genIpsum schema.items, done
         done)
     else
