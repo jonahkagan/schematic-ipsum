@@ -9,6 +9,8 @@
     "express": "3.0.5",
     "JSV": "4.0.x",
     "async": "0.1.x",
+    "moment": "1.7.x",
+    "node.io": "0.4.x",
     "underscore": "1.4.x"
   },
   "devDependencies": {

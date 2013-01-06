@@ -36,21 +36,21 @@ describe "object:", ->
     type: "object"
     properties: {}
 
-  testSchema "name",
+  testSchema "age",
     type: "object"
     properties:
-      name: type: "string"
-
-  testSchema "name, age",
-    type: "object"
-    properties:
-      name: type: "string"
       age: type: "number"
 
+  testSchema "age, alive",
+    type: "object"
+    properties:
+      age: type: "number"
+      alive: type: "boolean"
+
 describe "array:", ->
-  testSchema "string",
+  testSchema "number",
     type: "array"
-    items: type: "string"
+    items: type: "number"
 
 describe "nested:", ->
 
@@ -59,15 +59,15 @@ describe "nested:", ->
     items:
       type: "object"
       properties:
-        title: type: "string"
+        count: type: "number"
 
   testSchema "object with array",
     type: "object"
     properties:
-      title: type: "string"
+      count: type: "number"
       comments:
         type: "array"
-        items: type: "string"
+        items: type: "boolean"
 
 describe "string format:", ->
   testFmt = (f) -> testSchema f, { type: "string", format: f }

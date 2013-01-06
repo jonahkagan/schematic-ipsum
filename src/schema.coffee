@@ -2,12 +2,11 @@ _ = require "underscore"
 async = require "async"
 jsv = require("JSV").JSV
 
-env = jsv.createEnvironment "json-schema-draft-03" 
-metaSchema = env.getDefaultSchema()# "http://json-schema.org/draft-03/schema"
+scraper = require "./scraper"
 
 MAX_NUMBER = 100
 MIN_NUMBER = -100
-MAX_ARRAY_LENGTH = 100
+MAX_ARRAY_LENGTH = 5
 
 randomNum = (min, max) ->
   Math.random() * (max + min) + min
@@ -43,12 +42,12 @@ genFormattedString = (schema, done) ->
       #when "host-name"
       else "String format #{schema.format} not supported"
 
-# Generates a string by scraping Wikipedia
+# Generates a string for a schema assumed to have type string.
 genString = (schema, done) ->
   if schema.format?
     genFormattedString schema, done
   else
-    done null, "TODO"
+    scraper.paragraphs 10, done
   #else
   #  switch schema.ipsumType
   #    when "name"
@@ -80,13 +79,16 @@ genIpsum = (schema, done) ->
     else
       done null, "Dunno what to do for type #{schema.type}"
 
-module.exports =
+env = jsv.createEnvironment "json-schema-draft-03" 
+metaSchema = env.getDefaultSchema()# "http://json-schema.org/draft-03/schema"
 
-  # Check that this is a valid JSON schema by validating it against the
-  # meta-schema.
-  validate: (schema) ->
+# Check that the input is a valid JSON schema by validating it against the
+# meta-schema.
+validate = (schema) ->
     report = env.validate schema, metaSchema
     #console.log "errors", report.errors
     if _.isEmpty report.errors then null else report.errors
 
+module.exports =
+  validate: validate
   genIpsum: genIpsum
