@@ -7,8 +7,6 @@ env = jsv.createEnvironment "json-schema-draft-03"
 
 client = t.createJsonClient port: 3000
 
-schemas = require "./_schemas"
-
 validate = (schema, data) ->
   report = env.validate data, schema
   if _.isEmpty report.errors

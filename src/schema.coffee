@@ -1,26 +1,33 @@
 _ = require "underscore"
+async = require "async"
 jsv = require("JSV").JSV
-env = jsv.createEnvironment "json-schema-draft-03" 
 
+env = jsv.createEnvironment "json-schema-draft-03" 
 metaSchema = env.getDefaultSchema()# "http://json-schema.org/draft-03/schema"
 
 # Generate a JSON object that matches the given schema filled with ipsum
 # text.
-toIpsum = (schema) ->
+toIpsum = (schema, done) ->
+  ret = (res) -> done null, res
   switch schema.type
-    when "boolean" then Math.random() > 0.5
+    when "boolean"
+      ret Math.random() > 0.5
     when "number"
-      Math.random() * 100
+      ret Math.random() * 100
     when "integer"
-      Math.round(Math.random() * 100)
+      ret Math.round(Math.random() * 100)
     when "string"
-      "TODO"
+      done null, "TODO"
     when "object"
-      _.mapObjVals schema.properties, toIpsum
+      async.map _.values(schema.properties), toIpsum, (err, ipsumVals) ->
+        done err, _.object _.keys(schema.properties), ipsumVals
     when "array"
-      _.map _.range(0, Math.random() * 100), -> toIpsum schema.items
+      async.map(
+        _.range(0, Math.random() * 100)
+        (i, done) -> toIpsum schema.items, done
+        done)
     when "any"
-      "WTF"
+      ret "WTF"
 
 module.exports =
 
@@ -31,4 +38,4 @@ module.exports =
     #console.log "errors", report.errors
     if _.isEmpty report.errors then null else report.errors
 
-  toIpsum: (schema, done) -> done null, toIpsum schema
+  toIpsum: toIpsum
