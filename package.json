@@ -1,0 +1,23 @@
+{
+  "name": "schematic-ipsum",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node bin/server.js"
+  },
+  "dependencies": {
+    "express": "3.0.5",
+    "JSV": "4.0.x",
+    "underscore": "1.4.x"
+  },
+  "devDependencies": {
+    "mocha": "1.7.x",
+    "should": "1.2.x",
+    "testify": "git://github.com/hackersatbrown/testify.git",
+    "coffee-script": "1.4.x"
+  },
+  "engines": {
+    "node": "0.8.6",
+    "npm": "1.1.x"
+  }
+}
