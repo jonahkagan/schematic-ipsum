@@ -15,6 +15,7 @@
     "quest": "0.1.x",
     "jsdom": "0.3.x",
     "node-uuid": "1.4.x",
+    "connect-cors": "0.5.x",
     "underscore": "1.4.x"
   },
   "devDependencies": {

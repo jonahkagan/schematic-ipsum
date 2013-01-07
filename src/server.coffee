@@ -4,10 +4,18 @@ _ = require "./underscoreExt"
 winston = require "winston"
 expressWinston = require "express-winston"
 async = require "async"
+cors = require "connect-xcors"
 
 schema = require "./schema"
 
 app = express()
+
+console.log process.env.NODE_ENV
+PUBDIR = __dirname +
+  if process.env.NODE_ENV is "development"
+  then "/../front/public"
+  else "/public"
+console.log PUBDIR
 
 MAX_ITEMS = 50
 
@@ -19,6 +27,8 @@ app.set "port", process.env.PORT or 3000
 app.use express.logger "dev"
 app.use express.bodyParser()
 app.use express.methodOverride()
+app.use cors()
+app.use express.static PUBDIR
 app.use app.router
 
 # Error middleware
