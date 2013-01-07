@@ -8,21 +8,29 @@ MAX_NUMBER = 100
 MIN_NUMBER = -100
 MAX_ARRAY_LENGTH = 5
 
+nonEmpty = (strs) -> _.filter strs, (s) -> s and s.trim() isnt ""
+
 gen =
   paragraphs: (n, done) ->
     data.paragraphs (err, paras) ->
-      done err, _.takeCyclic(paras, n).join("\n").trim()
+      done err, _.takeCyclic(nonEmpty(paras), n).join("\n")
 
   # http://stackoverflow.com/questions/11761563/javascript-regexp-for-splitting-text-into-sentences-and-keeping-the-delimiter
   sentence: (done) ->
     gen.paragraphs 1, (err, para) ->
-      sentences = para.match /[^\.!\?]+[\.!\?]+/g or []
-      done err, _.randomFrom sentences
+      # TODO have a backup sentence
+      sentences = para.match(/[^\.!\?]+[\.!\?]+/g) ? ["error"]
+      done err, _.randomFrom nonEmpty sentences
 
   word: (done) ->
-    gen.sentence (err, sent) ->
-      words = sent.split(" ")
-      done err, _.randomFrom(words).toLowerCase()
+    gen.sentence (err, sentence) ->
+      words = sentence.split(" ")
+      word = _.randomFrom nonEmpty words
+      # Only allow word-y characters
+      word = word.toLowerCase().replace /[^a-z\-\']/g, ""
+      if word is ""
+      then gen.word done
+      else done err, word
 
   name: (done) ->
     # TODO
@@ -48,38 +56,45 @@ gen =
       when "word" then gen.word
       when "sentence" then gen.sentence
       when "paragraph" then (done) -> gen.paragraphs 1, done
-      else (done) -> gen.paragraphs _.randomInt(1, 10), done
+      when "long" then (done) -> gen.paragraphs _.randomInt(1, 10), done
+      else gen.sentence
     genFun done
 
   formattedString: (schema, done) ->
-    done null,
-      switch schema.format
-        when "date-time"
-          (new Date(_.randomInt 0, Date.now())).toISOString()
-        #when "date"
-        #when "time"
-        #when "regex"
-        when "color"
-          # http://paulirish.com/2009/random-hex-color-code-snippets/
-          "#" + _.randomInt(0, 16777215).toString(16)
-        #when "style"
-        when "phone"
-          "(#{_.randomInt 0, 999}) #{_.randomInt 0, 999} #{_.randomInt 0, 9999}"
-        when "uri" # TODO
-          "http://news.ycombinator.com"
-        when "email"
-          "notdoneyet@ipsum.com" # TODO
-        #when "ip-address"
-        #when "ipv6"
-        #when "host-name"
-        else "String format #{schema.format} not supported"
+    ret = (s) -> done null, s
+    suffix = -> _.randomFrom ["com", "org", "net", "edu", "xxx"]
+    switch schema.format
+      when "date-time"
+        ret (new Date(_.randomInt 0, Date.now())).toISOString()
+      #when "date"
+      #when "time"
+      #when "regex"
+      when "color"
+        # http://paulirish.com/2009/random-hex-color-code-snippets/
+        ret "#" + _.randomInt(0, 16777215).toString(16)
+      #when "style"
+      when "phone"
+        ret "(#{_.randomInt 0, 999}) #{_.randomInt 0, 999} #{_.randomInt 0, 9999}"
+      when "uri"
+        gen.word (err, word1) ->
+          gen.word (err, word2) ->
+            done err, "http://#{word1}.#{word2}.#{suffix()}"
+      when "email"
+        gen.name (err, name) ->
+          gen.word (err2, word) ->
+            name = name.toLowerCase().replace(/\s/g, "_")
+            done (err or err2), "#{name}@#{word}.#{suffix()}"
+      #when "ip-address"
+      #when "ipv6"
+      #when "host-name"
+      else "String format #{schema.format} not supported"
 
   # Generates a string for a schema assumed to have type string.
   string: (schema, done) ->
+    clean = (err, s) -> done err, s.trim()
     if schema.format?
-      gen.formattedString schema, done
-    else
-      gen.ipsumString schema, done
+    then gen.formattedString schema, clean
+    else gen.ipsumString schema, clean
 
   # Generates a random number b/w max and min
   # TODO take into account params of schema
