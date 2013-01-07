@@ -10,7 +10,10 @@
     "JSV": "4.0.x",
     "async": "0.1.x",
     "moment": "1.7.x",
-    "node.io": "0.4.x",
+    "express-winston": "0.1.x",
+    "winston": "0.6.x",
+    "quest": "0.1.x",
+    "jsdom": "0.3.x",
     "underscore": "1.4.x"
   },
   "devDependencies": {

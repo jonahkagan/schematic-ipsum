@@ -70,12 +70,25 @@ describe "nested:", ->
         items: type: "boolean"
 
 describe "string format:", ->
+  # TODO test these match the format
   testFmt = (f) -> testSchema f, { type: "string", format: f }
   testFmt "date-time"
   testFmt "color"
   testFmt "phone"
   testFmt "uri"
   testFmt "email"
+
+describe "string ipsum:", ->
+  # TODO test these are correct
+  testIpsum = (i) -> testSchema i, { type: "string", ipsum: i }
+  testIpsum "name"
+  testIpsum "first name"
+  testIpsum "last name"
+  testIpsum "word"
+  testIpsum "title"
+  testIpsum "sentence"
+  testIpsum "paragraph"
+
 
 describe "errors:", ->
 

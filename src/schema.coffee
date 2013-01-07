@@ -41,11 +41,25 @@ genString = (schema, done) ->
   if schema.format?
     genFormattedString schema, done
   else
-    scraper.paragraphs 10, done
-  #else
-  #  switch schema.ipsumType
-  #    when "name"
-  #    #when "
+    switch schema.ipsum
+      when "name"
+        scraper.names 1, done
+      when "first name"
+        scraper.names 1, (err, name) -> done err, name.split(' ')[0]
+      when "last name"
+        scraper.names 1, (err, name) -> done err, name.split(' ')[1..].join(' ')
+      when "word"
+        scraper.sentences 1, (err, sentence) ->
+          words = sentence.split(" ")
+          done err, words[_.randomInt(0, words.length)].toLowerCase()
+      when "title"
+        scraper.titles 1, done
+      when "sentence"
+        scraper.sentences 1, done
+      when "paragraph"
+        scraper.paragraphs 1, done
+      else
+        scraper.paragraphs _.randomInt(1, 10), done
       
 
 

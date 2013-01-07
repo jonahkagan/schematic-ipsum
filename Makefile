@@ -6,7 +6,11 @@ OUT = $(SRC:src/%.coffee=bin/%.js)
 TESTDIR = test
 TESTGREP = ""
 COFFEE = ./node_modules/.bin/coffee -c -o $(OUTDIR)
-MOCHA = ./node_modules/.bin/mocha -R spec --compilers coffee:coffee-script --ignore-leaks
+MOCHA = ./node_modules/.bin/mocha \
+				-R spec \
+				--compilers coffee:coffee-script \
+				--ignore-leaks \
+				--timeout 5s
 
 all: $(OUT)
 	

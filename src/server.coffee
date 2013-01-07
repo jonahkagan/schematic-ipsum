@@ -1,6 +1,8 @@
 express = require "express"
 http = require "http"
 _ = require "./underscoreExt"
+winston = require "winston"
+expressWinston = require "express-winston"
 
 schema = require "./schema"
 
@@ -17,6 +19,8 @@ app.use express.methodOverride()
 app.use app.router
 
 # Error middleware
+#app.use expressWinston.errorLogger transports: [
+#  new winston.transports.Console(json: true, colorize: true)]
 app.use express.errorHandler()
 
 # Define our routes
