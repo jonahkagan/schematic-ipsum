@@ -4,5 +4,9 @@
     "name": "Schematic Ipsum",
     "owner": "Jonah Kagan",
     "description": "A simple service that generates fake JSON data in accordance with a JSON schema. By making requests to a simple API, you can generate rich structured data with appropriately typed content, as opposed to your average plain text lorem ipsum."
-  }
+  },
+  "output": "./public",
+  "plugins": [
+    "wintersmith-less"
+  ]
 }

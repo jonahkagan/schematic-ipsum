@@ -1,7 +1,10 @@
 extends layout
 
 block content
-  != contents["readme.md"].html
+  .row
+    .span8.offset2
+      != contents["readme.md"].html
+
   //-include author
   //- underscore helps us filter and sort our articles
   //-- var articles = _.chain(contents.articles._.directories).map(function(item) {

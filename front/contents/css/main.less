@@ -1,0 +1,62 @@
+@back: hsl(295, 67%, 96%);
+@offset: hsl(40, 96%, 43%);
+@pop: hsl(280, 70%, 45%);
+
+body {
+  background: @back;
+  font-size: 16px;
+  font-family: "Source Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.5;
+  code {
+    font-size: 14px;
+  }
+}
+
+.container {
+  padding: 20px 0;
+}
+
+h1, h2, h3 {
+  margin-top: 30px;
+}
+
+h4 {
+  margin-top: 40px;
+  code {
+    color: inherit;
+    font-size: inherit;
+  }
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+/*@str: darken(@back, 60);*/
+
+a {
+  color: darken(@pop, 2);
+  &:hover { color: darken(@pop, 10); }
+}
+
+span.api-str code {
+  color: inherit;
+  font-weight: bold;
+}
+
+p > code { color: @offset; }
+code {
+  padding: 0;
+  border: none;
+  background: none;
+  white-space: normal;
+  span.string {
+    color: @offset;
+  }
+  span.attribute, span.number, span.boolean {
+    color: @pop;
+  }
+}
+pre code, pre {
+  background: lighten(@back, 7);
+}
