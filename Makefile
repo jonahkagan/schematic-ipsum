@@ -25,9 +25,9 @@ clean:
 	rm -rf $(OUTDIR)
 
 heroku: all
-	@rm -rf heroku/*
 	cp Procfile heroku
 	cp package.json heroku
 	cp -R bin heroku
-	cp -R node_modules heroku
+	cp -R data heroku
+	cd heroku && npm install --production
 	cd heroku && git add .  && git commit -m "update"
