@@ -1,3 +1,6 @@
+---
+
+---
 # Schematic Ipsum
 
 Schematic Ipsum is a simple service that generates fake JSON data in accordance with a [JSON schema](http://json-schema.org). By making requests to a simple API, you can generate rich structured data with appropriately typed content, as opposed to your average plain text lorem ipsum.
@@ -118,14 +121,22 @@ Response body:
 [ 8, 48, 35, 84, 73, -27, 45, -38, -12, 21 ]
 ```
 
+## Recipes
+
+TODO
+
 ## API
 
 Schematic Ipsum's API is fairly simple--it consists of a single operation:
 
 **URL**: http://schematic-ipsum.herokuapp.com/
+
 **Method**: POST
+
 **Body**: A valid JSON Schema (according to the [v3 spec](http://tools.ietf.org/html/draft-zyp-json-schema-03)), optionally embellished with `"ipsum"` hints.
+
 **Query parameters**:
+
   - `n` - optional - positive integer - How many JSON objects to generate (default 1)
 
 ### Schema Properties
@@ -133,16 +144,27 @@ Schematic Ipsum's API is fairly simple--it consists of a single operation:
 Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the currently supported properties:
 
 #### `"type"`
+
 - `"number"` 
+
     Any number, including negatives and floating points.
-    **Example:** `{ "type": "number" } --> -33.333`
+
+    **Example:** `{ "type": "number" }` --> `-33.333`
+
 - `"integer"`
+
     Just integers, not including floating points.
-    **Example:** `{ "type": "integer" } --> 42`
+
+    **Example:** `{ "type": "integer" }` --> `42`
+
 - `"boolean"`
+
     `true` or `false`
-    **Example:** `{ "type": "boolean" } --> true`
+
+    **Example:** `{ "type": "boolean" }` --> `true`
+
 - `"object"`
+
     The `"object"` type allows for nested schemas. When using this type, the schema must also have a `"properties"` property whose value is an object where the keys are the names of the properties and the values are schemas.
 
     **Example:**
@@ -153,11 +175,14 @@ Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the cur
             "count": { "type": "integer" }
         }
     }
+    ```
     -->
+    ```
     { count: 100 }
     ```
 
 - `"array"`
+
     Arrays are another way to produce nested data. When using type `"array"`, the schema must also have a `"items"` property whose value is a schema for the elements of the array.
 
     **Example:**
@@ -166,58 +191,101 @@ Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the cur
         "type": "array",
         "items": { "type": "boolean" }
     }
+    ```
     -->
+    ```
     [true, false, false, false, true]
     ```
 
 - `"string"`
+
     At its most basic, the `"string"` type will just generate a string.
 
-    **Example:** `{ "type": "string" } --> "What a boring schema"`
+    **Example:** `{ "type": "string" }` --> `"What a boring schema"`
 
 #### `"format"`
 
 Schemas with type `"string"` may also have a property `"format"` whose value is a string. Using the `"format"` property will generate a string of that format as described in the JSON Schema spec [(section 5.23)](http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23). The following formats are currently supported:
+
   - `"date-time"`
+
     **Example:** `"1977-09-30T12:25:29.729Z"`
+
   - `"color"` 
+
     **Example:** `"#77700b"`
+
   - `"phone"`
+
     **Example:** `"(646) 424 1532"`
+
   - `"uri"`
+
     Not guaranteed to point to a working website
+
     **Example:** `"http://average.wentja.edu"`
+
   - `"email"`
+
     Guaranteed to not point to a working email
+
     **Example:** `"rayner_heppenstall@and.xxx"`
 
 #### `"ipsum"`
 
 String schemas may optionally have a hint, which is specified with the `"ipsum"` property, whose value must be a string. The following hints are currently supported:
-  - `"id"` - An RFC4122 v4 UUID (basically 16 random characters with some dashes). You can pretty much rely on these being unique in any set of data you generate.
+  - `"id"` 
+
+    An RFC4122 v4 UUID (basically 16 random characters with some dashes). You can pretty much rely on these being unique in any set of data you generate.
+
+    **Example:** `"1a8b8863-a859-4d68-b63a-c466e554fd13"`
+
   - `"name"`
+
     A space-separated full name.
+
     **Example:** `"Vincent van Gogh"`
+
   - `"first name"` 
+
     Just a first name.
+
     **Example:** `"Vincent"`
+
   - `"last name"`
+
     Just a last name.
+
     **Example:** `"van Gogh"`
+
   - `"title"`
+
     The title of a random Wikipedia article.
+
     **Example:** `"Octopus wrestling"`
+
   - `"word"`
+
     One word.
+
     **Example:** `"half-baked"`
+
   - `"sentence"`
+
     One sentence, ending in some punctuation.
+
     **Example:** `"Octopus wrestling -- now there's a half-baked idea!"`
+
   - `"paragraph"`
+
     Multiple sentences!
+
     **Example:** `"Well actually, octopus wrestling was most popular on the West Coast of the United States during the 1960s. At that time, annual World Octopus Wrestling Championships were held in Puget Sound, Washington."` ...you get the idea.
+
   - `"long"`
+
     Multiple paragraphs.
+
     **Example:** this document
 
 ## Bugs
@@ -226,4 +294,4 @@ Please report bugs and feature requests on the [issues page](http://github.com/j
 
 ## About
 
-Created by [Jonah Kagan](jonahkagan.me) using CoffeeScript, Node.js, and many helpful libraries from the community. Source is open at <http://github.com/jonahkagan/schematic-ipsum>. Hosted on Heroku.
+Created by [Jonah Kagan](http://jonahkagan.me) using CoffeeScript, Node.js, and many helpful libraries from the community. Source is open at <http://github.com/jonahkagan/schematic-ipsum>. Hosted on Heroku.
