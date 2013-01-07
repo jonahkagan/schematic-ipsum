@@ -89,7 +89,7 @@ gen =
       #when "ip-address"
       #when "ipv6"
       #when "host-name"
-      else "String format #{schema.format} not supported"
+      else ret "String format #{schema.format} not supported"
 
   # Generates a string for a schema assumed to have type string.
   string: (schema, done) ->

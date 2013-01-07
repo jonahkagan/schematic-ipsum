@@ -27,7 +27,7 @@ app.use app.router
 app.use express.errorHandler()
 
 # Define our routes
-app.post "/ipsum", (req, res) ->
+app.post "/", (req, res) ->
   async.waterfall [
     (done) ->
       if (not req.body?) or (_.isEmpty req.body)
