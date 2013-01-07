@@ -48,42 +48,72 @@ randomFeatArticle = (done) ->
     articleUrl = baseUrl + a.attr "href"
     wikiArticle articleUrl, done
 
-n = 10
-outPath = "data/para/"
+titles = (done) ->
+  titleUrl = baseUrl + "/wiki/Wikipedia:Featured_article_candidates/Featured_log/" +
+    randomMoment().format "MMMM_YYYY"
+  console.log titleUrl
+  scrape uri: titleUrl, (err, $) ->
+    if err then return done err
+
+    titles = []
+    $("table#toc li.toclevel-2 span.toctext").each ->
+      titles.push $(this).text()
+
+    done null,
+      titles: titles
+      url: titleUrl
+ 
+names = (done) ->
+  nameUrl = baseUrl + "/wiki/" + randomMoment().format "MMMM_D"
+  console.log nameUrl
+  scrape uri: nameUrl, (err, $) ->
+    if err then return done err
+
+    names = []
+    birthList = $("div#mw-content-text > ul")[1] # births
+    $(birthList).find("li").each ->
+      line = $(this).text()
+      name = line.match(/\–([^,]+),/)?[1]
+      names.push name if name?
+
+    done null,
+      names: names
+      url: nameUrl
+
+write = (path, text) ->
+  fs.writeFile path, text, "utf8", (err) ->
+    if err then console.error err else console.log "done writing #{path}"
+
+writeResults = (msg, path, text) ->
+  if (not text?) or (text is "")
+    console.error "error scraping: #{msg}"
+  else
+    console.log "writing to #{path}"
+    write path, text
 
 name = (path) ->
   path[path.lastIndexOf("/") + 1..]
 
-_.each [1..n], (i) ->
-  randomFeatArticle (err, article) ->
-    path = outPath + name article.url + ".txt"
-    if err? or (not article.text?) or (article.text is "")
-      console.error "error scraping #{path}"
-      console.error err
-    else
-      console.log "writing to #{path}"
-      fs.writeFile path, article.text, "utf8", (err) ->
-        if err then console.error err else console.log "done writing #{path}"
+module.exports =
+  scrapeArticles: (n, outPath) ->
+    _.each [1..n], (i) ->
+      randomFeatArticle (err, res) ->
+        if err then return console.error err
+        path = outPath + name res.url + ".txt"
+        writeResults res.url, path, res.text
 
-#takeOffset = (list, n, offset) ->
-#  taken = _.take _.rest(list, offset), n
-#  if taken.length < n
-#    taken.concat _.takeCyclic list, n - taken.length
-#  else taken
+  scrapeTitles: (outPath) ->
+    titles (err, res) ->
+      if err then return console.error err
+      path = outPath + name res.url + ".txt"
+      writeResults res.url, path, titles.join("\n")
 
-#funs =
+  scrapeNames: (outPath) ->
+    names (err, res) ->
+      if err then return console.error err
+      path = outPath + name res.url + ".txt"
+      writeResults res.url, path, names.join("\n")
 
-#fromBackup = (name, n, done) ->
-#  fs.readFile "../backupData/#{name}" (err, str) ->
-#    done null, _.takeCyclic(str.split("\n"), n).join("\n")
-
-#module.exports = _.mapObjVals funs, (fun, name) ->
-#  (n, done) ->
-#    try 
-#      fun n, (err, result) ->
-#        if err? or result is ""
-#          fromBackup name, n, done
-#        else
-#          done null, result
-#    catch ex
-#      fromBackup name, n, done
+#module.exports.scrapeArticles 10, "data/para/"
+module.exports.scrapeTitles "data/titles/"
+#module.exports.scrapeNames "data/names/"

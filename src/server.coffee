@@ -54,7 +54,7 @@ app.post "/ipsum", (req, res) ->
       else
         console.log "Generated ipsum:", ipsums
         response = if ipsums.length is 1 then ipsums[0] else ipsums
-        res.send 200, JSON.stringify response
+        res.send 200, JSON.stringify(response, {}, "  ")
 
 http.createServer(app).listen app.get("port"), ->
   console.log "#{app.get "name"} listening on port #{app.get "port"}" 

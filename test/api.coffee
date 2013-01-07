@@ -80,13 +80,15 @@ describe "string format:", ->
 describe "string ipsum:", ->
   # TODO test these are correct
   testIpsum = (i) -> testSchema i, { type: "string", ipsum: i }
+  testIpsum "id"
   testIpsum "name"
   testIpsum "first name"
   testIpsum "last name"
-  testIpsum "word"
   testIpsum "title"
+  testIpsum "word"
   testIpsum "sentence"
   testIpsum "paragraph"
+  testIpsum "long"
 
 describe "multiple:", ->
   it "5 bools", (done) ->

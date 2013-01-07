@@ -1,6 +1,7 @@
 _ = require "./underscoreExt"
 async = require "async"
 jsv = require("JSV").JSV
+uuid = require "node-uuid"
 
 data = require "./data"
 
@@ -9,6 +10,7 @@ MIN_NUMBER = -100
 MAX_ARRAY_LENGTH = 5
 
 nonEmpty = (strs) -> _.filter strs, (s) -> s and s.trim() isnt ""
+clean = (s) -> s?.trim()
 
 gen =
   paragraphs: (n, done) ->
@@ -18,35 +20,35 @@ gen =
   # http://stackoverflow.com/questions/11761563/javascript-regexp-for-splitting-text-into-sentences-and-keeping-the-delimiter
   sentence: (done) ->
     gen.paragraphs 1, (err, para) ->
-      # TODO have a backup sentence
-      sentences = para.match(/[^\.!\?]+[\.!\?]+/g) ? ["error"]
-      done err, _.randomFrom nonEmpty sentences
+      sentences = nonEmpty para.match(/[^\.!\?]+[\.!\?]+/g)
+      if _.isEmpty sentences
+      then gen.sentence done
+      else done err, clean _.randomFrom sentences
 
   word: (done) ->
     gen.sentence (err, sentence) ->
       words = sentence.split(" ")
       word = _.randomFrom nonEmpty words
       # Only allow word-y characters
-      word = word.toLowerCase().replace /[^a-z\-\']/g, ""
+      word = word.toLowerCase().replace /[^a-z\-]/g, ""
       if word is ""
       then gen.word done
-      else done err, word
+      else done err, clean word
 
   name: (done) ->
-    # TODO
-    done null, "Obi Wan Kenobi"
+    data.names (err, names) ->
+      done err, clean _.randomFrom names
 
   title: (done) ->
-    # TODO
-    done null, "Star Wars"
+    data.titles (err, titles) ->
+      done err, clean _.randomFrom titles
 
   id: (done) ->
-    # TODO
-    done null, "A1234QF230948"
+    done null, uuid.v4()
 
   ipsumString: (schema, done) ->
     genFun = switch schema.ipsum
-      #when "id" # TODO
+      when "id" then gen.id
       when "name" then gen.name
       when "first name"
         (done) -> gen.name (err, name) -> done err, name.split(' ')[0]
@@ -76,9 +78,9 @@ gen =
       when "phone"
         ret "(#{_.randomInt 0, 999}) #{_.randomInt 0, 999} #{_.randomInt 0, 9999}"
       when "uri"
-        gen.word (err, word1) ->
-          gen.word (err, word2) ->
-            done err, "http://#{word1}.#{word2}.#{suffix()}"
+        gen.word (err1, word1) ->
+          gen.word (err2, word2) ->
+            done (err1 or err2), "http://#{word1}.#{word2}.#{suffix()}"
       when "email"
         gen.name (err, name) ->
           gen.word (err2, word) ->
@@ -91,10 +93,9 @@ gen =
 
   # Generates a string for a schema assumed to have type string.
   string: (schema, done) ->
-    clean = (err, s) -> done err, s.trim()
     if schema.format?
-    then gen.formattedString schema, clean
-    else gen.ipsumString schema, clean
+    then gen.formattedString schema, (err, s) -> done err, clean s
+    else gen.ipsumString schema, (err, s) -> done err, clean s
 
   # Generates a random number b/w max and min
   # TODO take into account params of schema
