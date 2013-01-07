@@ -30,7 +30,7 @@ heroku: all
 	cp -R bin heroku
 	cp -R data heroku
 
-	cd front && build
+	cd front && ./build
 	cp -R front/public heroku
 
 	cd heroku && npm install --production
