@@ -3,10 +3,13 @@ http = require "http"
 _ = require "./underscoreExt"
 winston = require "winston"
 expressWinston = require "express-winston"
+async = require "async"
 
 schema = require "./schema"
 
 app = express()
+
+MAX_ITEMS = 50
 
 # Config
 app.set "name", "Schematic Ipsum"
@@ -25,21 +28,33 @@ app.use express.errorHandler()
 
 # Define our routes
 app.post "/ipsum", (req, res) ->
-  if (not req.body?) or (_.isEmpty req.body)
-    res.send 400, "Request missing body, which should be JSON schema."
-  else
-    #console.log "Got schema:", req.body
-    err = schema.validate req.body # TODO optimize
-    #console.log "Validation error:", err
-    if err
-      res.send 400, err
-    else
-      schema.genIpsum req.body, (err, ipsum) ->
-        if err
-          res.send 400, err
-        else
-          #console.log "Generated ipsum:", ipsum
-          res.send 200, JSON.stringify ipsum
+  async.waterfall [
+    (done) ->
+      if (not req.body?) or (_.isEmpty req.body)
+        done "Request missing body, which should be JSON schema."
+      else done null
+  ,
+    (done) ->
+      req.query.n ?= 1
+      req.query.n = parseInt req.query.n
+      if not _.isNumber(req.query.n) 
+        done "Query param \"n\" must be a number, you sent #{req.query.n}"
+      else if not (req.query.n > 0 and req.query.n <= MAX_ITEMS)
+        done "Query param \"n\" must be between 0 and #{MAX_ITEMS}"
+      else done null
+  ,
+    (done) -> done schema.validate req.body # TODO optimize
+  ,
+    (done) -> schema.genIpsums req.body, req.query.n, done
+  ],
+    (err, ipsums) ->
+      if err?
+        console.error err
+        res.send 400, err
+      else
+        console.log "Generated ipsum:", ipsums
+        response = if ipsums.length is 1 then ipsums[0] else ipsums
+        res.send 200, JSON.stringify response
 
 http.createServer(app).listen app.get("port"), ->
   console.log "#{app.get "name"} listening on port #{app.get "port"}" 

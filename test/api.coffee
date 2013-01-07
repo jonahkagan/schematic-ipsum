@@ -23,7 +23,6 @@ testSchema = (title, schema) ->
       err = validate schema, data
       done err
 
-
 describe "primitive:", ->
   testSchema "string", type: "string"
   testSchema "number", type: "number"
@@ -89,6 +88,14 @@ describe "string ipsum:", ->
   testIpsum "sentence"
   testIpsum "paragraph"
 
+describe "multiple:", ->
+  it "5 bools", (done) ->
+    client.post "/ipsum?n=5", { type: "boolean" }, t.shouldNotErr (req, res, data) ->
+      console.log "5 bools data", data, typeof data
+      should.exist data
+      data.should.be.an.instanceOf Array
+      data.should.have.property "length", 5
+      done()
 
 describe "errors:", ->
 

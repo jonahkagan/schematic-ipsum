@@ -60,8 +60,6 @@ genString = (schema, done) ->
         scraper.paragraphs 1, done
       else
         scraper.paragraphs _.randomInt(1, 10), done
-      
-
 
 # Generate a JSON object that matches the given schema filled with ipsum
 # text.
@@ -81,22 +79,27 @@ genIpsum = (schema, done) ->
     when "array"
       # TODO take into account length constraints
       async.map(
-        _.range(0, _.randomInt(0, MAX_ARRAY_LENGTH))
+        [0.._.randomInt(0, MAX_ARRAY_LENGTH)]
         (i, done) -> genIpsum schema.items, done
         done)
     else
       done null, "Dunno what to do for type #{schema.type}"
 
+genIpsums = (schema, n, done) ->
+  async.map([0..n-1],
+    (i, done) -> genIpsum schema, done
+    done)
+
 env = jsv.createEnvironment "json-schema-draft-03" 
-metaSchema = env.getDefaultSchema()# "http://json-schema.org/draft-03/schema"
+metaSchema = env.findSchema "http://json-schema.org/draft-03/schema"
 
 # Check that the input is a valid JSON schema by validating it against the
 # meta-schema.
 validate = (schema) ->
-    report = env.validate schema, metaSchema
-    #console.log "errors", report.errors
-    if _.isEmpty report.errors then null else report.errors
+  report = env.validate schema, metaSchema
+  #console.log "errors", report.errors
+  if _.isEmpty report.errors then null else report.errors
 
 module.exports =
   validate: validate
-  genIpsum: genIpsum
+  genIpsums: genIpsums

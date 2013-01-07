@@ -46,12 +46,16 @@ scrapeWikiArticle = (done) ->
 
       done null, paras
 
-#scrapeWikiArticle (err, paras) -> console.log "SCRAPED", err, paras
+takeOffset = (list, n, offset) ->
+  taken = _.take _.rest(list, offset), n
+  if taken.length < n
+    taken.concat _.takeCyclic list, n - taken.length
+  else taken
 
 funs =
   paragraphs: (n, done) ->
     scrapeWikiArticle (err, paras) ->
-      done err, _.take(paras, n).join("\n")
+      done err, _.takeCyclic(paras, n).join("\n").trim()
 
   # http://stackoverflow.com/questions/11761563/javascript-regexp-for-splitting-text-into-sentences-and-keeping-the-delimiter
   sentences: (n, done) ->
@@ -59,7 +63,8 @@ funs =
       #console.log "OUTPUT", output
       sentences = paras.join(" ").match /[^\.!\?]+[\.!\?]+/g
       #console.log "SENTENCES", sentences
-      done err, _.take(sentences, n).join("")
+      nSents = takeOffset(sentences, n, _.randomInt(0, sentences.length))
+      done err, nSents.join("").trim()
 
   names: (n, done) ->
     done null, "Obi Wan Kenobi"
@@ -72,6 +77,6 @@ module.exports = _.mapObjVals funs, (fun, name) ->
     fun n, (err, result) ->
       if err? or result is ""
         fs.readFile "../backupData/#{name}" (err, str) ->
-          done null, _.take(str.split("\n"), n).join("\n")
+          done null, _.takeCyclic(str.split("\n"), n).join("\n")
       else
         done null, result
