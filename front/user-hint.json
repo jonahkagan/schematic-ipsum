@@ -1,0 +1,10 @@
+{
+    "type": "object",
+    "properties": {
+        "id": { "type": "string", "ipsum": "id" },
+        "name": { "type": "string", "ipsum": "name" },
+        "email": { "type": "string", "format": "email" },
+        "bio": { "type": "string", "ipsum": "sentence" },
+        "age": { "type": "integer" }
+    }
+}

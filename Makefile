@@ -29,5 +29,9 @@ heroku: all
 	cp package.json heroku
 	cp -R bin heroku
 	cp -R data heroku
+
+	cd front && build
+	cp -R front/public heroku
+
 	cd heroku && npm install --production
 	cd heroku && git add .  && git commit -m "update"
