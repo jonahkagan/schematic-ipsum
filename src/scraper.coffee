@@ -53,30 +53,18 @@ takeOffset = (list, n, offset) ->
   else taken
 
 funs =
-  paragraphs: (n, done) ->
-    scrapeWikiArticle (err, paras) ->
-      done err, _.takeCyclic(paras, n).join("\n").trim()
 
-  # http://stackoverflow.com/questions/11761563/javascript-regexp-for-splitting-text-into-sentences-and-keeping-the-delimiter
-  sentences: (n, done) ->
-    scrapeWikiArticle (err, paras) ->
-      #console.log "OUTPUT", output
-      sentences = paras.join(" ").match /[^\.!\?]+[\.!\?]+/g
-      #console.log "SENTENCES", sentences
-      nSents = takeOffset(sentences, n, _.randomInt(0, sentences.length))
-      done err, nSents.join("").trim()
-
-  names: (n, done) ->
-    done null, "Obi Wan Kenobi"
-
-  titles: (n, done) ->
-    done null, "Star Wars"
+fromBackup = (name, n, done) ->
+  fs.readFile "../backupData/#{name}" (err, str) ->
+    done null, _.takeCyclic(str.split("\n"), n).join("\n")
 
 module.exports = _.mapObjVals funs, (fun, name) ->
   (n, done) ->
-    fun n, (err, result) ->
-      if err? or result is ""
-        fs.readFile "../backupData/#{name}" (err, str) ->
-          done null, _.takeCyclic(str.split("\n"), n).join("\n")
-      else
-        done null, result
+    try 
+      fun n, (err, result) ->
+        if err? or result is ""
+          fromBackup name, n, done
+        else
+          done null, result
+    catch ex
+      fromBackup name, n, done

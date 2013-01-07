@@ -14,6 +14,9 @@ _.mixin
   randomInt: (min, max) ->
     Math.floor _.randomNum min, max
 
+  randomFrom: (list) ->
+    list[_.randomInt 0, list.length]
+
   takeCyclic: (list, n) ->
     if _.isEmpty list then return []
     taken = _.take list, n
