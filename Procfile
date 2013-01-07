@@ -1,1 +1,1 @@
-web: make; node bin/server.js
+web: node bin/server.js

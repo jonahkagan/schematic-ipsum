@@ -1,4 +1,4 @@
-.PHONY: all clean test
+.PHONY: all clean test heroku
 SRCDIR = src
 SRC = $(shell find src -name "*.coffee")
 OUTDIR = bin
@@ -23,3 +23,11 @@ test: all
 
 clean:
 	rm -rf $(OUTDIR)
+
+heroku: all
+	@rm -rf heroku/*
+	cp Procfile heroku
+	cp package.json heroku
+	cp -R bin heroku
+	cp -R node_modules heroku
+	cd heroku && git add .  && git commit -m "update"
