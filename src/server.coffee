@@ -52,7 +52,7 @@ app.post "/ipsum", (req, res) ->
         console.error err
         res.send 400, err
       else
-        console.log "Generated ipsum:", ipsums
+        #console.log "Generated ipsum:", ipsums
         response = if ipsums.length is 1 then ipsums[0] else ipsums
         res.send 200, JSON.stringify(response, {}, "  ")
 

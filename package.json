@@ -14,7 +14,7 @@
     "winston": "0.6.x",
     "quest": "0.1.x",
     "jsdom": "0.3.x",
-    "node-uuid": "0.1.x",
+    "node-uuid": "1.4.x",
     "underscore": "1.4.x"
   },
   "devDependencies": {
