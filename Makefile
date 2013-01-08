@@ -27,6 +27,7 @@ clean:
 heroku: all
 	cp Procfile heroku
 	cp package.json heroku
+	cp README.md heroku
 	cp -R bin heroku
 	cp -R data heroku
 
