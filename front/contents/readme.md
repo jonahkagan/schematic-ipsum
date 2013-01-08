@@ -41,9 +41,10 @@ POST request and get back a new user object.
 
 **Request:**
 
-    POST http://schematic-ipsum.herokuapp.com/ HTTP/1.1
-    Content-Type: application/json
-
+```
+POST http://schematic-ipsum.herokuapp.com/ HTTP/1.1
+Content-Type: application/json
+```
 ```json
 {
     "type": "object",
@@ -120,6 +121,12 @@ Content-Type: application/json
 ```json
 [ 8, 48, 35, 84, 73, -27, 45, -38, -12, 21 ]
 ```
+
+## Creating Schemas
+
+If creating a schema by hand seems too tedious -- if it seems like a
+mechanical, algorithmic process -- you can visit <http://www.jsonschema.net>
+and automagically generate a schema for a JSON object.
 
 ## API
 
