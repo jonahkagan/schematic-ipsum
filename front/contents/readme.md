@@ -69,9 +69,9 @@ Content-Type: application/json
 }
 ```
 
-Hmm, well that doesn't look exactly like our first user object. It matches the spec--all the properties have the right type--but the spec didn't include enough information to produce realistic strings.
+Hmm, well that doesn't look quite like our first user object. It matches the schema -- all the properties have the right type -- but the schema didn't include enough information to produce realistic strings.
 
-Schematic Ipsum supports hints in your schema to specify the kinds of strings you want. Here's the same schema with hints:
+To solve this problem, Schematic Ipsum lets you add hints in your schema to specify the kinds of strings you want. Here's the same schema with hints:
 
 **Request:**
 ```
