@@ -60,11 +60,11 @@ POST request and get back a new user object.
 **Response body:**
 ```json
 {
-  "id": "It has been suggested that he adopted Christianity as part of a settlement with Oswiu.",
-  "name": "Its upperparts and sides are grey, but elongated grey feathers with black central stripes are draped across the back from the shoulder area.",
-  "email": "rita_sakellariou@vancouver.edu",
-  "bio": "Wintjiya came from an area north-west or north-east of Walungurru (the Pintupi-language name for Kintore, Northern Territory).",
-  "age": 39
+    "id": "It has been suggested that he adopted Christianity as part of a settlement with Oswiu.",
+    "name": "Its upperparts and sides are grey, but elongated grey feathers with black central stripes are draped across the back from the shoulder area.",
+    "email": "rita_sakellariou@vancouver.edu",
+    "bio": "Wintjiya came from an area north-west or north-east of Walungurru (the Pintupi-language name for Kintore, Northern Territory).",
+    "age": 39
 }
 ```
 
@@ -93,11 +93,11 @@ Content-Type: application/json
 **Response body:**
 ```json
 {
-  "id": "9f7c0eff-c217-4602-9ef1-489aaed341f4",
-  "name": "Jonty Rhodes",
-  "email": "john_laroche@troop.net",
-  "bio": "Multiple copies were made of that original which were distributed to monasteries across England, where they were independently updated.",
-  "age": 51
+    "id": "9f7c0eff-c217-4602-9ef1-489aaed341f4",
+    "name": "Jonty Rhodes",
+    "email": "john_laroche@troop.net",
+    "bio": "Multiple copies were made of that original which were distributed to monasteries across England, where they were independently updated.",
+    "age": 51
 }
 ```
 
@@ -121,23 +121,22 @@ Content-Type: application/json
 [ 8, 48, 35, 84, 73, -27, 45, -38, -12, 21 ]
 ```
 
-## Recipes
-
-Coming soon...
-
 ## API
 
 Schematic Ipsum's API is fairly simple -- it consists of a single operation:
 
-**URL**: http://schematic-ipsum.herokuapp.com/
+**URL**: `http://schematic-ipsum.herokuapp.com/`
 
-**Method**: POST
+**Method**: `POST`
 
 **Body**: A valid JSON Schema (according to the [v3 spec](http://tools.ietf.org/html/draft-zyp-json-schema-03)), optionally embellished with `"ipsum"` hints.
 
 **Query parameters**:
 
-  - `n` - optional - positive integer - How many JSON objects to generate (default 1)
+- `n` - optional - positive integer
+
+    How many JSON objects to generate (default 1). Currently limited to 50 at
+    most.
 
 ### Schema Properties
 

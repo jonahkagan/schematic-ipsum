@@ -55,7 +55,9 @@ app.post "/", (req, res) ->
   ,
     (done) -> done schema.validate req.body # TODO optimize
   ,
-    (done) -> schema.genIpsums req.body, req.query.n, done
+    (done) ->
+      #console.log "Generating for schema:", req.body
+      schema.genIpsums req.body, req.query.n, done
   ],
     (err, ipsums) ->
       if err?

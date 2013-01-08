@@ -123,8 +123,10 @@ gen =
           [0.._.randomInt(0, MAX_ARRAY_LENGTH)]
           (i, done) -> gen.ipsum schema.items, done
           done)
+      when "any"
+        done "Type \"any\" not supported."
       else
-        done null, "Dunno what to do for type #{schema.type}"
+        done "Bad type: \"#{schema.type}\""
 
   ipsums: (schema, n, done) ->
     async.map([0..n-1],
