@@ -14,7 +14,7 @@ console.log process.env.NODE_ENV
 PUBDIR = __dirname +
   if process.env.NODE_ENV is "development"
   then "/../front/public"
-  else "/public"
+  else "/../public"
 console.log PUBDIR
 
 MAX_ITEMS = 50
