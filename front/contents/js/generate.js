@@ -1,6 +1,5 @@
 $(document).ready(function () {
   var inputEditor = ace.edit("input");
-  //inputEditor.setTheme("ace/theme/monokai");
   inputEditor.getSession().setMode("ace/mode/json");
   inputEditor.renderer.setShowGutter(false);
   inputEditor.setDisplayIndentGuides(false);
@@ -13,26 +12,6 @@ $(document).ready(function () {
   outputEditor.setDisplayIndentGuides(false);
   outputEditor.getSession().setUseWrapMode(true);
 
-  //$("#input").on("keypress", function () {
-  //  console.log("change");
-  //  $(this).val(hljs.highlight($(this).val()));
-  //  //$(this).each(function (i, e) { hljs.highlightBlock(e); });  
-  //});
-  //var inputMirror = CodeMirror.fromTextArea($("#input")[0], {
-  //  //mode: "javascript",
-  //  mode: { name: "javascript", json: true },
-  //  theme: "schema default",
-  //  lineWrapping: true
-  //})
-
-  //var outputMirror = CodeMirror.fromTextArea($("#output")[0], {
-  //  mode: { name: "javascript", json: true },
-  //  //mode: "javascript",
-  //  theme: "schema default",
-  //  lineWrapping: true,
-  //  readOnly: true
-  //})
-
   $("#generate").on("click", function () {
     $("#error").empty()
     var schema = JSON.parse(inputEditor.getValue());
@@ -44,8 +23,8 @@ $(document).ready(function () {
     }
     console.log(schema);
     $.post(
-      //"http://schematic-ipsum.herokuapp.com/",
-      "http://localhost:3000?n=" + n,
+      "http://schematic-ipsum.herokuapp.com/?n=" + n,
+      //"http://localhost:3000?n=" + n,
       schema,
       function (data) {
         console.log(data);
