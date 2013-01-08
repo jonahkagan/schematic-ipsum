@@ -1,8 +1,9 @@
 # Schematic Ipsum
 
-An API for generating JSON objects filled with fake content that satisfy JSON
-schemas.
+A simple service that generates fake JSON data in accordance with a JSON
+Schema. More details and documentation at
+<http://schematic-ipsum.herokuapp.com>.
 
-## Testing
+## Development
 
-To run the tests, just run `make test`.
+Build by running `make`.  To run the tests, just run `make test`.
