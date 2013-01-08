@@ -1,5 +1,5 @@
 fs = require "fs"
-_ = require "./underscoreExt"
+_ = require "../src/underscoreExt"
 moment = require "moment"
 quest = require "quest"
 jsdom = require "jsdom"
@@ -115,5 +115,6 @@ module.exports =
       writeResults res.url, path, names.join("\n")
 
 #module.exports.scrapeArticles 10, "data/para/"
-module.exports.scrapeTitles "data/titles/"
+#module.exports.scrapeTitles "data/titles/"
 #module.exports.scrapeNames "data/names/"
+console.log "Scrapers are commented out"
