@@ -14,7 +14,13 @@ $(document).ready(function () {
 
   $("#generate").on("click", function () {
     $("#error").empty()
-    var schema = JSON.parse(inputEditor.getValue());
+    try {
+      var schema = JSON.parse(inputEditor.getValue());
+    } catch (e) {
+      console.error(e);
+      $("#error").append(e.toString());
+      return
+    }
     //var schema = JSON.parse($("#input").val());
     var n = $("#input-n").val();
     if (!n) {
