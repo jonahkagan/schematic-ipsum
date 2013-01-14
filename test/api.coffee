@@ -15,12 +15,13 @@ validate = (schema, data) ->
     console.error report.errors
     new Error report.errors
 
-testSchema = (title, schema) ->
+testSchema = (title, schema, check) ->
    it "#{title}", (done) ->
     client.post "/", schema, t.shouldNotErr (req, res, data) ->
       console.log "#{title} data", data
       should.exist data
       err = validate schema, data
+      if check? then check data
       done err
 
 describe "primitive:", ->
@@ -28,7 +29,6 @@ describe "primitive:", ->
   testSchema "number", type: "number"
   testSchema "integer", type: "integer"
   testSchema "boolean", type: "boolean"
-  testSchema "any", type: "any"
 
 describe "object:", ->
   testSchema "empty",
@@ -99,6 +99,13 @@ describe "multiple:", ->
       data.should.have.property "length", 5
       done()
 
+describe "enum:", ->
+  testSchema "singleton", { enum: [1] }, (res) -> res is 1
+  testSchema "strings",
+    type: "string"
+    enum: ["a", "b"]
+  , (res) -> res is "a" or res is "b"
+
 describe "errors:", ->
   # TODO tests for ?n
 
@@ -111,3 +118,6 @@ describe "errors:", ->
   # TODO test more invalid schemas
   it "should error if given an invalid schema", (done) ->
     client.post "/", { type: 0 }, t.shouldErr done, 400
+
+  it "should error if given type any", (done) ->
+    client.post "/", { type: "any" }, t.shouldErr done, 400

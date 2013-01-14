@@ -102,9 +102,15 @@ gen =
   number: (schema, rand, done) ->
     done null, rand MAX_NUMBER, MIN_NUMBER
 
-  # Generate a JSON object that matches the given schema filled with ipsum
-  # text.
-  ipsum: (schema, done) ->
+  byEnum: (schema, done) ->
+    if not _.isArray schema.enum
+      done "Value for \"enum\" must be an array."
+    if _.isEmpty schema.enum
+      done "Array for \"enum\" must not be empty."
+    else
+      done null, _.randomFrom schema.enum
+
+  byType: (schema, done) ->
     switch schema.type
       when "boolean"
         done null, Math.random() > 0.5
@@ -127,6 +133,13 @@ gen =
         done "Type \"any\" not supported."
       else
         done "Bad type: \"#{schema.type}\""
+
+  # Generate a JSON object that matches the given schema filled with ipsum
+  # text.
+  ipsum: (schema, done) ->
+    if schema.enum?
+    then gen.byEnum schema, done
+    else gen.byType schema, done
 
   ipsums: (schema, n, done) ->
     async.map([0..n-1],
