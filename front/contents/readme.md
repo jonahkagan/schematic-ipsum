@@ -13,11 +13,11 @@ Say we wanted to model users with JSON objects like this one:
 
 ```json
 {
-    "id": "1a8b8863-a859-4d68-b63a-c466e554fd13",
-    "name": "Ada Lovelace",
-    "email": "ada@geemail.com",
-    "bio": "First programmer. No big deal.",
-    "age": 198
+  "id": "1a8b8863-a859-4d68-b63a-c466e554fd13",
+  "name": "Ada Lovelace",
+  "email": "ada@geemail.com",
+  "bio": "First programmer. No big deal.",
+  "age": 198
 }
 ```
 
@@ -25,14 +25,14 @@ A JSON schema for this object might look like this:
 
 ```json
 {
-    "type": "object",
-    "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "email": { "type": "string", "format": "email" },
-        "bio": { "type": "string" },
-        "age": { "type": "integer" }
-    }
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "bio": { "type": "string" },
+    "age": { "type": "integer" }
+  }
 }
 ```
 
@@ -47,25 +47,25 @@ Content-Type: application/json
 ```
 ```json
 {
-    "type": "object",
-    "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "email": { "type": "string", "format": "email" },
-        "bio": { "type": "string" },
-        "age": { "type": "integer" }
-    }
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "email": { "type": "string", "format": "email" },
+    "bio": { "type": "string" },
+    "age": { "type": "integer" }
+  }
 }
 ```
 
 **Response body:**
 ```json
 {
-    "id": "It has been suggested that he adopted Christianity as part of a settlement with Oswiu.",
-    "name": "Its upperparts and sides are grey, but elongated grey feathers with black central stripes are draped across the back from the shoulder area.",
-    "email": "rita_sakellariou@vancouver.edu",
-    "bio": "Wintjiya came from an area north-west or north-east of Walungurru (the Pintupi-language name for Kintore, Northern Territory).",
-    "age": 39
+  "id": "It has been suggested that he adopted Christianity as part of a settlement with Oswiu.",
+  "name": "Its upperparts and sides are grey, but elongated grey feathers with black central stripes are draped across the back from the shoulder area.",
+  "email": "rita_sakellariou@vancouver.edu",
+  "bio": "Wintjiya came from an area north-west or north-east of Walungurru (the Pintupi-language name for Kintore, Northern Territory).",
+  "age": 39
 }
 ```
 
@@ -80,25 +80,25 @@ Content-Type: application/json
 ```
 ```json
 {
-    "type": "object",
-    "properties": {
-        "id": { "type": "string", "ipsum": "id" },
-        "name": { "type": "string", "ipsum": "name" },
-        "email": { "type": "string", "format": "email" },
-        "bio": { "type": "string", "ipsum": "sentence" },
-        "age": { "type": "integer" }
-    }
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "ipsum": "id" },
+    "name": { "type": "string", "ipsum": "name" },
+    "email": { "type": "string", "format": "email" },
+    "bio": { "type": "string", "ipsum": "sentence" },
+    "age": { "type": "integer" }
+  }
 }
 ```
 
 **Response body:**
 ```json
 {
-    "id": "9f7c0eff-c217-4602-9ef1-489aaed341f4",
-    "name": "Jonty Rhodes",
-    "email": "john_laroche@troop.net",
-    "bio": "Multiple copies were made of that original which were distributed to monasteries across England, where they were independently updated.",
-    "age": 51
+  "id": "9f7c0eff-c217-4602-9ef1-489aaed341f4",
+  "name": "Jonty Rhodes",
+  "email": "john_laroche@troop.net",
+  "bio": "Multiple copies were made of that original which were distributed to monasteries across England, where they were independently updated.",
+  "age": 51
 }
 ```
 
@@ -181,10 +181,10 @@ Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the cur
 
     ```javascript
     {
-        "type": "object",
-        "properties": {
-            "count": { "type": "integer" }
-        }
+      "type": "object",
+      "properties": {
+        "count": { "type": "integer" }
+      }
     }
     ==> { "count": 100 }
     ```
@@ -195,8 +195,8 @@ Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the cur
 
     ```javascript
     {
-        "type": "array",
-        "items": { "type": "boolean" }
+      "type": "array",
+      "items": { "type": "boolean" }
     }
     ==> [true, false, false, false, true]
     ```
