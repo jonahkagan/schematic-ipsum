@@ -209,6 +209,21 @@ Schematic Ipsum doesn't yet support the full JSON Schema spec. These are the cur
     { "type": "string" } ==> "What a boring schema"
     ```
 
+#### `"enum"`
+
+The `"enum"` property lets you use an array to specify the set of values that
+may satisfy a schema. For example, the schema
+
+```javascript
+{
+  "type": "string",
+  "enum": ["north", "south", "east", "west"]
+}
+```
+
+might generate `"north"`, or `"east"`, etc., but will not generate any string
+not in the array.
+
 #### `"format"`
 
 Schemas with type `"string"` may also have a property `"format"` whose value is a string. Using the `"format"` property will generate a string of that format as described in the JSON Schema spec ([section 5.23](http://tools.ietf.org/html/draft-zyp-json-schema-03#section-5.23)). The following formats are currently supported:
@@ -228,7 +243,7 @@ Schemas with type `"string"` may also have a property `"format"` whose value is 
     Guaranteed to not point to a working email
 
 
-#### `"ipsum"`
+#### `"ipsum"` (extension)
 
 String schemas may optionally have a hint, which is specified with the `"ipsum"` property, whose value must be a string. The following hints are currently supported:
 
