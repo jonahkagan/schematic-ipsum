@@ -5,8 +5,11 @@ block content
     .span6
       != contents["readme.md"].html
     .span6
-      .fixed#tryit
-        h2 Try It!
+      #tryit
+        div#tryit-header
+          h2 Try It!
+          .share-buttons
+            include share-buttons
         - rows = 15
         .row
           div.span6.wrap

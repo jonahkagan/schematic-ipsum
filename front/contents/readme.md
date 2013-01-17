@@ -7,6 +7,11 @@ Schematic Ipsum is a simple service that generates fake JSON data in accordance 
 
 Inspired by [Sacha Greif](http://sachagreif.com/why-lorem-ipsum-is-hurting-your-designs/) and sites like [Space Ipsum](http://spaceipsum.com) and [Fillerati](http://fillerati.com), Schematic Ipsum doesn't generate traditional Latin text. Instead, it pulls names, titles, and text from featured articles on Wikipedia in order to generate *realistic* data.
 
+**Designers**, quickly bring your mockups to life with realistic copy.
+**Developers**, populate your test database with structured data. 
+**Schema enthusiasts**, iteratively tune your schemas by generating example
+data.
+
 ## An Example
 
 Say we wanted to model users with JSON objects like this one:
@@ -120,6 +125,31 @@ Content-Type: application/json
 **Response body:**
 ```json
 [ 8, 48, 35, 84, 73, -27, 45, -38, -12, 21 ]
+```
+
+## Recipes
+
+Here are some simple one-liners you can use in a terminal to quickly generate some data. These use the excellent [HTTPie](https://github.com/jkbr/httpie) command line HTTP client, but you could easily swap it out for cURL if you're masochistic or something.
+
+Generate one big chunk of text with multiple paragraphs (like your average
+ipsum filler - good for mockups) and copy it to the clipboard:
+
+```bash
+http POST http://schematic-ipsum.herokuapp.com type=string ipsum=long | pbcopy
+```
+
+Generate an array of 20 names.
+
+```bash
+http POST http://schematic-ipsum.herokuapp.com/?n=20 type=string ipsum=name
+```
+
+Generate 10 users based on the schema in the file called `user.json` and put them in a
+file called `test-users.json`:
+
+```bash
+http POST http://schematic-ipsum.herokuapp.com/?n=10 < user.json >
+test-users.json
 ```
 
 ## Creating Schemas

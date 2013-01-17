@@ -70,11 +70,14 @@ code, .editor.ace-tm {
   }
 }
 pre code, pre, .editor {
-  padding: 5px;
+  word-wrap: normal;
+  word-break: normal;
   background: white;
 }
 
 #tryit {
+  position: fixed;
+  height: 100%;
   background: darken(@back, 5);
   border: 1px solid darken(@back, 10);
   border-width: 0 1px;
@@ -107,11 +110,22 @@ pre code, pre, .editor {
     width: 25px;
     margin-top: 8px;
   }
-}
+  #tryit-header {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    position: relative;
+    h2 {
+      margin: 0
+      display: inline;
+    }
+    .share-buttons {
+      position: absolute;
+      display: inline;
+      top: 5px;
+      right: 0;
+    }
+  }
 
-.fixed {
-  position: fixed;
-  height: 100%;
 }
 
 .center {
