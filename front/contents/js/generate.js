@@ -1,16 +1,17 @@
 $(document).ready(function () {
+  function config(editor) {
+    editor.getSession().setMode("ace/mode/json");
+    editor.getSession().setTabSize(2);
+    editor.renderer.setShowGutter(false);
+    editor.setDisplayIndentGuides(false);
+    editor.getSession().setUseWrapMode(true);
+  }
   var inputEditor = ace.edit("input");
-  inputEditor.getSession().setMode("ace/mode/json");
-  inputEditor.renderer.setShowGutter(false);
-  inputEditor.setDisplayIndentGuides(false);
-  inputEditor.getSession().setUseWrapMode(true);
+  config(inputEditor);
 
   var outputEditor = ace.edit("output");
-  outputEditor.getSession().setMode("ace/mode/json");
+  config(outputEditor);
   outputEditor.setReadOnly(true);
-  outputEditor.renderer.setShowGutter(false);
-  outputEditor.setDisplayIndentGuides(false);
-  outputEditor.getSession().setUseWrapMode(true);
 
   $("#generate").on("click", function () {
     $("#error").empty()
