@@ -5,6 +5,7 @@
     "name": { "type": "string", "ipsum": "name" },
     "email": { "type": "string", "format": "email" },
     "bio": { "type": "string", "ipsum": "sentence" },
-    "age": { "type": "integer" }
+    "age": { "type": "integer" },
+    "avatar": { "type": "string", "ipsum": "small image" }
   }
 }

@@ -89,6 +89,9 @@ describe "string ipsum:", ->
   testIpsum "sentence"
   testIpsum "paragraph"
   testIpsum "long"
+  testIpsum "small image"
+  testIpsum "medium image"
+  testIpsum "large image"
 
 describe "multiple:", ->
   it "5 bools", (done) ->
