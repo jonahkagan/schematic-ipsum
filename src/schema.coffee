@@ -47,8 +47,7 @@ gen =
     done null, uuid.v4()
 
   image: (size, done) ->
-    params = {"small": "s", "medium": "m", "large": "l"}
-    done null, 'http://hhhhold.com/' + params[size.split(' ')[0]] + "?" + _.randomInt(0, 16777215)
+    done null, 'http://hhhhold.com/' + size + "?" + _.randomInt(0, 16777215)
 
   ipsumString: (schema, done) ->
     genFun = switch schema.ipsum
@@ -63,9 +62,9 @@ gen =
       when "sentence" then gen.sentence
       when "paragraph" then (done) -> gen.paragraphs 1, done
       when "long" then (done) -> gen.paragraphs _.randomInt(1, 10), done
-      when "small image" then (done) -> gen.image schema.ipsum, done
-      when "medium image" then (done) -> gen.image schema.ipsum, done
-      when "large image" then (done) -> gen.image schema.ipsum, done
+      when "small image" then (done) -> gen.image 's', done
+      when "medium image" then (done) -> gen.image 'm', done
+      when "large image" then (done) -> gen.image 'l', done
       else gen.sentence
     genFun done
 

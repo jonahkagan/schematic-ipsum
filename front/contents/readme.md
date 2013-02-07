@@ -302,6 +302,12 @@ String schemas may optionally have a hint, which is specified with the `"ipsum"`
 
   - <span class="api-str">`"long"`</span> - multiple paragraphs
 
+  - <span class="api-str">`"small image"`</span> - URL for an image with both dimensions between 100px and 250px
+
+  - <span class="api-str">`"medium image"`</span> - URL for an image with both dimensions between 250px and 500px
+
+  - <span class="api-str">`"large image"`</span> - URL for an image with both dimensions between 500px and 900px
+
 ## Bugs
 
 Please report bugs and feature requests on the [issues page](http://github.com/jonahkagan/schematic-ipsum/issues). Pull requests are welcome!
