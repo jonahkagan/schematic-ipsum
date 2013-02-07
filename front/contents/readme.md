@@ -22,7 +22,8 @@ Say we wanted to model users with JSON objects like this one:
   "name": "Ada Lovelace",
   "email": "ada@geemail.com",
   "bio": "First programmer. No big deal.",
-  "age": 198
+  "age": 198,
+  "avatar": "http://hhhhold.com/s?18732"
 }
 ```
 
@@ -36,7 +37,8 @@ A JSON schema for this object might look like this:
     "name": { "type": "string" },
     "email": { "type": "string", "format": "email" },
     "bio": { "type": "string" },
-    "age": { "type": "integer" }
+    "age": { "type": "integer" },
+    "avatar": { "type": "string" }
   }
 }
 ```
@@ -58,7 +60,8 @@ Content-Type: application/json
     "name": { "type": "string" },
     "email": { "type": "string", "format": "email" },
     "bio": { "type": "string" },
-    "age": { "type": "integer" }
+    "age": { "type": "integer" },
+    "avatar": { "type": "string" }
   }
 }
 ```
@@ -70,7 +73,8 @@ Content-Type: application/json
   "name": "Its upperparts and sides are grey, but elongated grey feathers with black central stripes are draped across the back from the shoulder area.",
   "email": "rita_sakellariou@vancouver.edu",
   "bio": "Wintjiya came from an area north-west or north-east of Walungurru (the Pintupi-language name for Kintore, Northern Territory).",
-  "age": 39
+  "age": 39,
+  "avatar": "However, she refused to admit her guilt to the end, and had given no evidence against any others of the accused."
 }
 ```
 
@@ -91,7 +95,8 @@ Content-Type: application/json
     "name": { "type": "string", "ipsum": "name" },
     "email": { "type": "string", "format": "email" },
     "bio": { "type": "string", "ipsum": "sentence" },
-    "age": { "type": "integer" }
+    "age": { "type": "integer" },
+    "avatar": { "type": "string", "ipsum": "small image" },
   }
 }
 ```
@@ -103,7 +108,8 @@ Content-Type: application/json
   "name": "Jonty Rhodes",
   "email": "john_laroche@troop.net",
   "bio": "Multiple copies were made of that original which were distributed to monasteries across England, where they were independently updated.",
-  "age": 51
+  "age": 51,
+  "avatar": "http://hhhhold.com/s?324332"
 }
 ```
 
@@ -301,6 +307,12 @@ String schemas may optionally have a hint, which is specified with the `"ipsum"`
     ...you get the idea.
 
   - <span class="api-str">`"long"`</span> - multiple paragraphs
+
+  - <span class="api-str">`"small image"`</span> - URL for an image with width and height both randomly between 100px and 250px
+
+  - <span class="api-str">`"medium image"`</span> - URL for an image with width and height both randomly between 250px and 500px
+
+  - <span class="api-str">`"large image"`</span> - URL for an image with width and height both randomly between 500px and 900px
 
 ## Bugs
 
