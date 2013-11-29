@@ -124,3 +124,6 @@ describe "errors:", ->
 
   it "should error if given type any", (done) ->
     client.post "/", { type: "any" }, t.shouldErr done, 400
+
+  it "should error if given type array without items", (done) ->
+    client.post "/", { type: "array" }, t.shouldErr done, 400

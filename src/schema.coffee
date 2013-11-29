@@ -130,11 +130,14 @@ gen =
         async.map _.values(schema.properties), gen.ipsum, (err, ipsumVals) ->
           done err, _.object _.keys(schema.properties), ipsumVals
       when "array"
-        # TODO take into account length constraints
-        async.map(
-          [0.._.randomInt(0, MAX_ARRAY_LENGTH)]
-          (i, done) -> gen.ipsum schema.items, done
-          done)
+        if schema.items?
+          # TODO take into account length constraints
+          async.map(
+            [0.._.randomInt(0, MAX_ARRAY_LENGTH)]
+            (i, done) -> gen.ipsum schema.items, done
+            done)
+        else
+          done "Missing \"items\" schema for schema of type \"array\""
       when "any"
         done "Type \"any\" not supported."
       else
