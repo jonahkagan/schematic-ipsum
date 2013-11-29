@@ -6,4 +6,4 @@ Schema. More details and documentation at
 
 ## Development
 
-Build by running `make`.  To run the tests, just run `make test`.
+Install dependencies by running `npm install`. Build by running `make`.  To run the tests, just run `make test`. You can run a dev server using `./run.sh`.
