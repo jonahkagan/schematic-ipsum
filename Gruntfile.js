@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
 		folders: {
 			bin: 'bin',
+			scraper: 'scraper',
 			src: 'src',
 			test: 'test'
 		},
@@ -15,7 +16,6 @@ module.exports = function(grunt) {
 		coffee: {
 			compile: {
 				expand: true,
-				flatten: true,
 				cwd: '<%= folders.src %>',
 				src: ['*.coffee'],
 				dest: '<%= folders.bin %>',
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
 		shell: {
 			scrape: {
-				command: './node_modules/.bin/coffee scraper/scraper.coffee'
+				command: './node_modules/.bin/coffee <%= folders.scraper %>/scraper.coffee'
 			}
 		},
 
@@ -52,5 +52,5 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('scrape', ['shell:scrape']);
 
-	grunt.registerTask('test', ['simplemocha']);
+	grunt.registerTask('test', ['coffee', 'simplemocha']);
 };
