@@ -4,13 +4,21 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+		folders: {
+			bin: 'bin',
+			src: 'src',
+			test: 'test'
+		},
+
+		clean: ['<%= folders.bin %>'],
+
 		coffee: {
 			compile: {
 				expand: true,
 				flatten: true,
-				cwd: 'src',
+				cwd: '<%= folders.src %>',
 				src: ['*.coffee'],
-				dest: 'bin',
+				dest: '<%= folders.bin %>',
 				ext: '.js'
 			}
 		},
@@ -24,10 +32,11 @@ module.exports = function(grunt) {
 				compilers: ['coffee:coffee-script']
 			},
 
-			all: { src: ['test/**/*.coffee'] }
+			all: { src: ['<%= folders.test %>/**/*.coffee'] }
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-simple-mocha');
 

@@ -19,6 +19,7 @@
   "devDependencies": {
     "coffee-script": "1.4.x",
     "grunt": "^0.4.4",
+    "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-coffee": "^0.10.1",
     "grunt-simple-mocha": "^0.4.0",
     "jsdom": "0.3.x",
