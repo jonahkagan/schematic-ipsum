@@ -23,6 +23,12 @@ module.exports = function(grunt) {
 			}
 		},
 
+		shell: {
+			scrape: {
+				command: './node_modules/.bin/coffee scraper/scraper.coffee'
+			}
+		},
+
 		simplemocha: {
 			options: {
 				timeout: 5000,
@@ -39,9 +45,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-coffee');
 	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-shell');
 
 	// Default task(s).
 	grunt.registerTask('default', ['coffee', 'simplemocha']);
+
+	grunt.registerTask('scrape', ['shell:scrape']);
 
 	grunt.registerTask('test', ['simplemocha']);
 };
