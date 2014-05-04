@@ -17,12 +17,14 @@
     "underscore": "1.4.x"
   },
   "devDependencies": {
-    "quest": "0.1.x",
+    "coffee-script": "1.4.x",
+    "grunt": "^0.4.4",
+    "grunt-contrib-coffee": "^0.10.1",
     "jsdom": "0.3.x",
     "mocha": "1.7.x",
+    "quest": "0.1.x",
     "should": "1.2.x",
-    "testify": "git://github.com/hackersatbrown/testify.git",
-    "coffee-script": "1.4.x"
+    "testify": "git://github.com/hackersatbrown/testify.git"
   },
   "engines": {
     "node": "0.8.x",
