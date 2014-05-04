@@ -13,11 +13,26 @@ module.exports = function(grunt) {
 				dest: 'bin',
 				ext: '.js'
 			}
+		},
+
+		simplemocha: {
+			options: {
+				timeout: 5000,
+				ignoreLeaks: true,
+				grep: '',
+				reporter: 'spec',
+				compilers: ['coffee:coffee-script']
+			},
+
+			all: { src: ['test/**/*.coffee'] }
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-simple-mocha');
 
 	// Default task(s).
-	grunt.registerTask('default', ['coffee']);
+	grunt.registerTask('default', ['coffee', 'simplemocha']);
+
+	grunt.registerTask('test', ['simplemocha']);
 };
