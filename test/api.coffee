@@ -1,12 +1,9 @@
 should = require "should"
-t = require "testify"
 _ = require "underscore"
 ipsum = require "../bin/schema"
 
 jsv = require("JSV").JSV
 env = jsv.createEnvironment "json-schema-draft-03" 
-
-#client = t.createJsonClient port: 3000
 
 validate = (schema, data) ->
   report = env.validate data, schema

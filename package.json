@@ -24,8 +24,7 @@
     "jsdom": "^0.10.5",
     "mocha": "^1.18.2",
     "quest": "^0.2.8",
-    "should": "^3.3.1",
-    "testify": "^0.2.9"
+    "should": "^3.3.1"
   },
   "engines": {
     "node": "0.8.x",
