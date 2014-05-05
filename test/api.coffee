@@ -12,13 +12,13 @@ validate = (schema, data) ->
   if _.isEmpty report.errors
     null
   else
-    console.error report.errors
+#    console.error report.errors
     new Error report.errors
 
 testSchema = (title, schema, check) ->
    it "#{title}", (done) ->
     client.post "/", schema, t.shouldNotErr (req, res, data) ->
-      console.log "#{title} data", data
+#      console.log "#{title} data", data
       should.exist data
       err = validate schema, data
       if check? then check data
@@ -96,7 +96,7 @@ describe "string ipsum:", ->
 describe "multiple:", ->
   it "5 bools", (done) ->
     client.post "/?n=5", { type: "boolean" }, t.shouldNotErr (req, res, data) ->
-      console.log "5 bools data", data, typeof data
+#      console.log "5 bools data", data, typeof data
       should.exist data
       data.should.be.an.instanceOf Array
       data.should.have.property "length", 5
