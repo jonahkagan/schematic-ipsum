@@ -18,9 +18,8 @@ validate = (schema, data) ->
 
 testSchema = (title, schema, check) ->
   it "#{title}", (done) ->
-    ipsum.genIpsums schema, 1, (error, data) ->
+    ipsum.genIpsum schema, (error, data) ->
 #      console.log "#{title} data", data
-      data = data[0]
       should.exist data
       err = validate schema, data
       if check? then check data
@@ -120,20 +119,20 @@ describe "errors:", ->
   # TODO tests for ?n
 
   it "should error if not given a schema (null)", (done) ->
-    ipsum.genIpsums null, 1, shouldError done
+    ipsum.genIpsum null, shouldError done
 
   it "should error if not given a schema (undefined)", (done) ->
-    ipsum.genIpsums undefined, 1, shouldError done
+    ipsum.genIpsum undefined, shouldError done
 
   it "should error if given an empty schema", (done) ->
-    ipsum.genIpsums {}, 1, shouldError done
+    ipsum.genIpsum {}, shouldError done
 
   # TODO test more invalid schemas
   it "should error if given an invalid schema", (done) ->
-    ipsum.genIpsums { type: 0 }, 1, shouldError done
+    ipsum.genIpsum { type: 0 }, shouldError done
 
   it "should error if given type any", (done) ->
-    ipsum.genIpsums { type: "any" }, 1, shouldError done
+    ipsum.genIpsum { type: "any" }, shouldError done
 
   it "should error if given type array without items", (done) ->
-    ipsum.genIpsums { type: "array" }, 1, shouldError done
+    ipsum.genIpsum { type: "array" }, shouldError done

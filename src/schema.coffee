@@ -169,4 +169,5 @@ validate = (schema) ->
 
 module.exports =
   validate: validate
+  genIpsum: gen.ipsum
   genIpsums: gen.ipsums
