@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node bin/server.js"
+    "test": "grunt test"
   },
   "main": "bin/schema",
   "dependencies": {
