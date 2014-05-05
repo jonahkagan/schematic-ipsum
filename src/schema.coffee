@@ -146,7 +146,7 @@ gen =
   # Generate a JSON object that matches the given schema filled with ipsum
   # text.
   ipsum: (schema, done) ->
-    if schema == null or schema == undefined
+    if !schema?
     then done "Needs schema"
     else if schema.enum?
     then gen.byEnum schema, done
