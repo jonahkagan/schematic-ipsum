@@ -1,11 +1,12 @@
 should = require "should"
 t = require "testify"
 _ = require "underscore"
+ipsum = require "../bin/schema"
 
 jsv = require("JSV").JSV
 env = jsv.createEnvironment "json-schema-draft-03" 
 
-client = t.createJsonClient port: 3000
+#client = t.createJsonClient port: 3000
 
 validate = (schema, data) ->
   report = env.validate data, schema
@@ -16,9 +17,10 @@ validate = (schema, data) ->
     new Error report.errors
 
 testSchema = (title, schema, check) ->
-   it "#{title}", (done) ->
-    client.post "/", schema, t.shouldNotErr (req, res, data) ->
+  it "#{title}", (done) ->
+    ipsum.genIpsums schema, 1, (error, data) ->
 #      console.log "#{title} data", data
+      data = data[0]
       should.exist data
       err = validate schema, data
       if check? then check data
@@ -95,7 +97,7 @@ describe "string ipsum:", ->
 
 describe "multiple:", ->
   it "5 bools", (done) ->
-    client.post "/?n=5", { type: "boolean" }, t.shouldNotErr (req, res, data) ->
+    ipsum.genIpsums { type: "boolean" }, 5, (error, data) ->
 #      console.log "5 bools data", data, typeof data
       should.exist data
       data.should.be.an.instanceOf Array
@@ -109,21 +111,29 @@ describe "enum:", ->
     enum: ["a", "b"]
   , (res) -> res is "a" or res is "b"
 
+shouldError = (done) ->
+  (error) ->
+    should.exist error
+    done()
+
 describe "errors:", ->
   # TODO tests for ?n
 
-  it "should error if not given a schema", (done) ->
-    client.post "/", null, t.shouldErr done, 400
+  it "should error if not given a schema (null)", (done) ->
+    ipsum.genIpsums null, 1, shouldError done
+
+  it "should error if not given a schema (undefined)", (done) ->
+    ipsum.genIpsums undefined, 1, shouldError done
 
   it "should error if given an empty schema", (done) ->
-    client.post "/", {}, t.shouldErr done, 400
+    ipsum.genIpsums {}, 1, shouldError done
 
   # TODO test more invalid schemas
   it "should error if given an invalid schema", (done) ->
-    client.post "/", { type: 0 }, t.shouldErr done, 400
+    ipsum.genIpsums { type: 0 }, 1, shouldError done
 
   it "should error if given type any", (done) ->
-    client.post "/", { type: "any" }, t.shouldErr done, 400
+    ipsum.genIpsums { type: "any" }, 1, shouldError done
 
   it "should error if given type array without items", (done) ->
-    client.post "/", { type: "array" }, t.shouldErr done, 400
+    ipsum.genIpsums { type: "array" }, 1, shouldError done
