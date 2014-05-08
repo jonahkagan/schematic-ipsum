@@ -1,28 +1,25 @@
 {
   "name": "schematic-ipsum",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node bin/server.js"
+    "test": "grunt test"
   },
+  "main": "bin/schema",
   "dependencies": {
-    "express": "3.0.5",
     "JSV": "4.0.x",
-    "async": "0.1.x",
-    "moment": "1.7.x",
-    "express-winston": "0.1.x",
-    "winston": "0.6.x",
+    "async": "^0.8.0",
+    "moment": "^2.6.0",
     "node-uuid": "1.4.x",
-    "connect-xcors": "0.5.x",
-    "underscore": "1.4.x"
+    "underscore": "^1.6.0",
+    "winston": "^0.7.3"
   },
   "devDependencies": {
-    "quest": "0.1.x",
-    "jsdom": "0.3.x",
-    "mocha": "1.7.x",
-    "should": "1.2.x",
-    "testify": "git://github.com/hackersatbrown/testify.git",
-    "coffee-script": "1.4.x"
+    "coffee-script": "^1.7.1",
+    "jsdom": "^0.10.5",
+    "mocha": "^1.18.2",
+    "quest": "^0.2.8",
+    "should": "^3.3.1"
   },
   "engines": {
     "node": "0.8.x",
