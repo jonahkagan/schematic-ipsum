@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+		"test": "make test"
   },
+	"main": "bin/schema",
   "dependencies": {
     "JSV": "4.0.x",
     "async": "0.1.x",
