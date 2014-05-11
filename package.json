@@ -3,17 +3,14 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node bin/server.js"
+		"test": "make test"
   },
+	"main": "bin/schema",
   "dependencies": {
-    "express": "3.0.5",
     "JSV": "4.0.x",
     "async": "0.1.x",
     "moment": "1.7.x",
-    "express-winston": "0.1.x",
-    "winston": "0.6.x",
     "node-uuid": "1.4.x",
-    "connect-xcors": "0.5.x",
     "underscore": "1.4.x"
   },
   "devDependencies": {
@@ -21,7 +18,6 @@
     "jsdom": "0.3.x",
     "mocha": "1.7.x",
     "should": "1.2.x",
-    "testify": "git://github.com/hackersatbrown/testify.git",
     "coffee-script": "1.4.x"
   },
   "engines": {

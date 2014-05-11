@@ -146,7 +146,9 @@ gen =
   # Generate a JSON object that matches the given schema filled with ipsum
   # text.
   ipsum: (schema, done) ->
-    if schema.enum?
+    if !schema?
+    then done "Needs schema"
+    else if schema.enum?
     then gen.byEnum schema, done
     else gen.byType schema, done
 
@@ -167,4 +169,5 @@ validate = (schema) ->
 
 module.exports =
   validate: validate
+  genIpsum: gen.ipsum
   genIpsums: gen.ipsums
